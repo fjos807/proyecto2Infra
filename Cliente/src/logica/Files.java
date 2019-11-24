@@ -75,13 +75,12 @@ public Boolean isRegisted(String username, String password) throws IOException, 
     BufferedReader br = new BufferedReader(new FileReader("Users.csv"));
     String line;
     Cifrado password_sin_cifrado=new Cifrado();
-    String contrasenna=password_sin_cifrado.descifrar(password);
+    String contrasenna=password_sin_cifrado.cifrar(password);
     while ( (line = br.readLine()) != null ) {
+        
         String[] values = line.split(",");
-        System.out.println(contrasenna);
         if(values[0].equals(username)) {
-            if(values[1].equals(password_sin_cifrado)){
-                //System.out.println(values[0]);
+            if(values[1].equals(contrasenna)){
                 return true;
             }
         }
@@ -89,4 +88,19 @@ public Boolean isRegisted(String username, String password) throws IOException, 
     br.close();
     return false;
 }
+
+//public boolean FileChecker {
+//	
+//    
+//	  File f = new File("c:\\mkyong.txt");
+//
+//	  if(f.exists()){
+//		  System.out.println("File existed");
+//	  }else{
+//		  System.out.println("File not found!");
+//	  }
+//      
+//  }
+//  
+//}
 }
