@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import java.net.Socket;
 import javax.swing.JFrame;
 
 /**
@@ -16,7 +17,9 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form Inicio
      */
-    public Inicio() {
+    public static Socket socket;
+    public Inicio(Socket socket) {
+        this.socket = socket;
         initComponents();
     }
 
@@ -74,7 +77,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Registro registro = new Registro();
+        Registro registro = new Registro(socket);
         registro.setLocationRelativeTo(null);
         registro.setVisible(true);
         registro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,7 +86,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Login login = new Login();
+        Login login = new Login(socket);
         login.setLocationRelativeTo(null);
         login.setVisible(true);
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +123,7 @@ public class Inicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inicio().setVisible(true);
+                new Inicio(socket).setVisible(true);
             }
         });
     }

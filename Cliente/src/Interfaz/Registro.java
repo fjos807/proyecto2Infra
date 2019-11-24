@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import java.net.Socket;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,7 +18,9 @@ public class Registro extends javax.swing.JFrame {
     /**
      * Creates new form Registro
      */
-    public Registro() {
+    public static Socket socket;
+    public Registro(Socket socket) {
+        this.socket = socket;
         initComponents();
     }
 
@@ -139,7 +142,7 @@ public class Registro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Inicio inicio = new Inicio();
+        Inicio inicio = new Inicio(socket);
         inicio.setLocationRelativeTo(null);
         inicio.setVisible(true);
         inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,7 +166,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Login jframe = new Login();
+        Login jframe = new Login(socket);
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -200,7 +203,7 @@ public class Registro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registro().setVisible(true);
+                new Registro(socket).setVisible(true);
             }
         });
     }
