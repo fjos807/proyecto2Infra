@@ -5,6 +5,8 @@
  */
 package Interfaz;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -163,11 +165,33 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Login jframe = new Login();
-        jframe.setLocationRelativeTo(null);
-        jframe.setVisible(true);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(false);
+        String username=jTextField1.getText();
+        if(username!=""&& username.length()>6 && username.length()<13){
+            if(jTextField2.getText().equals(jTextField3.getText())){
+                try {
+                    User login= new User(jTextField1.getText(),jTextField2.getText());   
+                    Files iniciarSesion=new Files();
+                    //iniciarSesion.createUsersFile();
+                    iniciarSesion.saveUserCredential(login);
+                    JOptionPane.showMessageDialog(null, "Usuario registrado" );
+                } catch (Exception ex) {
+                    Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+                                   JOptionPane.showMessageDialog(null, ""
+                                           + "Error al guardar usuario");
+                }
+                Login jframe = new Login();
+                jframe.setLocationRelativeTo(null);
+                jframe.setVisible(true);
+                jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.setVisible(false); 
+            }else{ 
+               JOptionPane.showMessageDialog(null, "Las contraseñas no "
+                       + "coinciden");
+            }
+        }else{
+               JOptionPane.showMessageDialog(null, "Por favor revise las "
+                       + "restricciones");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

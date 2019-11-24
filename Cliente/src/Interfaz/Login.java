@@ -5,7 +5,11 @@
  */
 package Interfaz;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import logica.Files;
 
 /**
  *
@@ -142,11 +146,34 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MenuPrincipal inicio = new MenuPrincipal();
-        inicio.setLocationRelativeTo(null);
-        inicio.setVisible(true);
-        inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(false);
+        if(!"".equals(jTextFieldUsuario.getText()) && !"".equals(jTextFieldContraseña.getText())){
+            if("administrador".equals(jTextFieldUsuario.getText()) && "123Adm$".equals(jTextFieldContraseña.getText())){
+                MenuAdmin inicio = new MenuAdmin();
+                inicio.setLocationRelativeTo(null);
+                inicio.setVisible(true);
+                inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.setVisible(false);  
+            }else{
+                try {
+                    Files verificarUsuario= new Files();
+                    
+                    if(verificarUsuario.isRegisted(jTextFieldUsuario.getText(), jTextFieldContraseña.getText())){
+                        MenuUsuario inicio = new MenuUsuario();
+                        inicio.setLocationRelativeTo(null);
+                        inicio.setVisible(true);
+                        inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        this.setVisible(false);  
+                    }else{
+                        JOptionPane.showMessageDialog(null, ""
+                                           + "Usuario no registrado");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ""
+                                           + "Error por favor vuelva a intentarlo");
+                }
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
