@@ -8,13 +8,18 @@ package logica;
 import Model.User;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JComboBox;
 import logica.Cifrado;
 
 /**
@@ -25,6 +30,7 @@ public class Files {
     
 public void saveUserCredential(User login) throws Exception{
     String fileName="Users.csv";
+    createUsersFile();
     //Delimiter used in CSV file
     String COMMA_DELIMITER = ",";
     String NEW_LINE_SEPARATOR = "\n";
@@ -57,16 +63,19 @@ public void saveUserCredential(User login) throws Exception{
     }
 }
 public void createUsersFile(){
-    String FILE_HEADER = "username,password";
-    FileWriter fileWriter;
-    try {
-        fileWriter = new FileWriter("Users.csv");
-        fileWriter.append(FILE_HEADER);
-        fileWriter.append("\n");
-        fileWriter.flush();
-        fileWriter.close();
-    } catch (IOException ex) {
-        Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+    if(!FileChecker("Users","")){
+    
+        String FILE_HEADER = "username,password";
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter("Users.csv");
+            fileWriter.append(FILE_HEADER);
+            fileWriter.append("\n");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Files.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 
@@ -89,18 +98,76 @@ public Boolean isRegisted(String username, String password) throws IOException, 
     return false;
 }
 
-//public boolean FileChecker {
-//	
-//    
-//	  File f = new File("c:\\mkyong.txt");
-//
-//	  if(f.exists()){
-//		  System.out.println("File existed");
-//	  }else{
-//		  System.out.println("File not found!");
-//	  }
-//      
-//  }
-//  
-//}
+public boolean FileChecker(String filename,String root) {
+	  File f = new File(root+"\\"+filename+".csv");
+
+	  if(f.exists()){
+                System.out.println("File existed");
+              return true;
+		
+	  }else{
+              System.out.println("File not found!");
+              return false;
+	  }
 }
+public boolean FolderChecker(String foldername) {
+	  File f = new File(foldername);
+
+	  if(f.exists()){
+                System.out.println("Folder existed");
+              return true;
+		
+	  }else{
+              System.out.println("Folder not found!");
+              return false;
+	  }
+}
+public void createFolder(String foldername){
+    new File("Bases"+"\\"+foldername).mkdir();
+    System.out.println("Folder creado");
+}
+public boolean createTable(String tableName, String db){
+    if(!FileChecker(tableName,"Bases")){
+        
+        new File("Bases"+"\\"+db+"\\"+tableName).mkdir();
+        System.out.println("Folder creado");
+        return true;
+    }
+    return false;
+}
+
+public List<String> findAllDataBases() {
+    String cwd = System.getProperty("user.dir");
+    File directory = new File(cwd+"\\"+"Bases");
+	
+    FileFilter directoryFileFilter = new FileFilter() {
+        public boolean accept(File file) {
+            return file.isDirectory();
+        }
+    };
+		
+    File[] directoryListAsFile = directory.listFiles(directoryFileFilter);
+    //System.out.println(directoryListAsFile);
+    List<String> foldersInDirectory = new ArrayList<String>(directoryListAsFile.length);
+    System.out.println(foldersInDirectory);
+    for (File directoryAsFile : directoryListAsFile) {
+        //System.out.println(foldersInDirectory.add(directoryAsFile.getName()));
+        foldersInDirectory.add(directoryAsFile.getName());
+    }
+    System.out.println(foldersInDirectory);
+    return foldersInDirectory;
+}
+//    public void Agregar (JComboBox jComboBox1){
+//        //leerCSV leerArchivo=new leerCSV();
+//        //ArrayList<ArrayList<String>> informacion=leerArchivo.leer();
+//        
+//        jComboBox1.addItem("Usuarios");
+//        
+//        for(int i=0;i<informacion.size();i++){
+//            ArrayList<String> opc=informacion.get(i);
+//            jComboBox1.addItem(opc.get(0));
+//        }
+//        
+//    }
+}
+

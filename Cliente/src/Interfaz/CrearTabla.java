@@ -5,19 +5,35 @@
  */
 package Interfaz;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import logica.Files;
 
 /**
  *
  * @author GRD
  */
 public class CrearTabla extends javax.swing.JFrame {
-
+    static ArrayList<ArrayList<String>> table_fields=new ArrayList<ArrayList<String>>();
     /**
      * Creates new form CrearTabla
      */
     public CrearTabla() {
         initComponents();
+        Files folder= new Files();
+        ArrayList<String> folders=(ArrayList<String>) folder.findAllDataBases();
+        System.out.println(folders);
+        BasesComboBox.setModel(new DefaultComboBoxModel(folders.toArray()));
+       
+        ArrayList<String> types=new ArrayList<String>();
+        types.add("String");
+        types.add("Interger");
+        types.add("Boolean");
+        types.add("Float");
+        TypeComboBox.setModel(new DefaultComboBoxModel(types.toArray()));
     }
 
     /**
@@ -30,102 +46,146 @@ public class CrearTabla extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        RequeridoCheckBox = new javax.swing.JCheckBox();
+        TypeComboBox = new javax.swing.JComboBox<String>();
+        AddButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        BasesComboBox = new javax.swing.JComboBox<String>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        addedTable = new javax.swing.JTable();
+        TableNameTextField = new javax.swing.JTextField();
+        FieldTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel1.setText("Nombre de la Tabla:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 70, 131, 16);
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Estructura de la Tabla:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(20, 100, 154, 16);
 
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel4.setText("Nombre del campo:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(20, 140, 154, 16);
 
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel5.setText("Tipo de Dato:");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(20, 200, 107, 16);
 
-        jCheckBox1.setText("Requerido");
+        RequeridoCheckBox.setFont(new java.awt.Font("Century Gothic", 2, 11)); // NOI18N
+        RequeridoCheckBox.setText("Requerido");
+        RequeridoCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RequeridoCheckBoxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(RequeridoCheckBox);
+        RequeridoCheckBox.setBounds(20, 220, 100, 23);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(TypeComboBox);
+        TypeComboBox.setBounds(150, 170, 53, 20);
 
-        jButton1.setText("Agregar campo a la tabla");
+        AddButton.setFont(new java.awt.Font("Century Gothic", 2, 11)); // NOI18N
+        AddButton.setText("Agregar campo a la tabla");
+        AddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AddButton);
+        AddButton.setBounds(354, 207, 190, 23);
 
+        jButton2.setFont(new java.awt.Font("Century Gothic", 2, 11)); // NOI18N
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(10, 370, 90, 23);
 
-        jButton3.setText("Condiciones");
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
+        jLabel6.setText("Base de datos:");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(20, 170, 107, 16);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(128, 128, 128)))
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addGap(16, 16, 16)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
-        );
+        BasesComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        BasesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BasesComboBoxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BasesComboBox);
+        BasesComboBox.setBounds(150, 140, 56, 20);
+
+        addedTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(addedTable);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(92, 248, 452, 95);
+
+        TableNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TableNameTextFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(TableNameTextField);
+        TableNameTextField.setBounds(150, 70, 138, 20);
+
+        FieldTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldTextFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(FieldTextField);
+        FieldTextField.setBounds(150, 100, 138, 20);
+
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        jLabel7.setText("Creación de tablas");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(100, 10, 360, 45);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,6 +197,56 @@ public class CrearTabla extends javax.swing.JFrame {
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void RequeridoCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequeridoCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RequeridoCheckBoxActionPerformed
+
+    private void BasesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BasesComboBoxActionPerformed
+        // TODO add your handling code here:
+
+
+        
+    }//GEN-LAST:event_BasesComboBoxActionPerformed
+
+    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
+        // TODO add your handling code here:
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[] {"Nombre","Tipo","Requerido"});
+        String field=FieldTextField.getText().toString();
+        String type=TypeComboBox.getSelectedItem().toString();
+        if(!field.equals("") && !type.equals("")){
+            ArrayList<String> field_values=new ArrayList<String>();
+            String requerido="No";
+            if(RequeridoCheckBox.isSelected()){requerido="Si";}
+            field_values.add(field);
+            field_values.add(type);
+            field_values.add(requerido);
+            table_fields.add(field_values);
+        }
+        
+        try{
+            for(int i=0;i<table_fields.size();i++){       
+                ArrayList<String> fila;
+                fila = table_fields.get(i);
+                modelo.addRow(new Object[] {fila.get(0),fila.get(1),fila.get(2)});               
+            }
+            addedTable.setModel(modelo);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    
+    }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void TableNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TableNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TableNameTextFieldActionPerformed
+
+    private void FieldTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +276,7 @@ public class CrearTabla extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CrearTabla().setVisible(true);
@@ -174,15 +285,23 @@ public class CrearTabla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton AddButton;
+    private javax.swing.JComboBox<String> BasesComboBox;
+    private javax.swing.JTextField FieldTextField;
+    private javax.swing.JCheckBox RequeridoCheckBox;
+    private javax.swing.JTextField TableNameTextField;
+    private javax.swing.JComboBox<String> TypeComboBox;
+    private javax.swing.JTable addedTable;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

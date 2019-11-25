@@ -8,6 +8,8 @@ package Interfaz;
 import Model.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logica.Files;
@@ -47,6 +49,7 @@ public class Registro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,14 +57,19 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel1.setText("Registro de nuevo usuario");
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel2.setText("Ingrese su nombre:");
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel3.setText("Ingrese su contraseña:");
 
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jLabel4.setText("Verificar contraseña:");
 
+        jButton2.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jButton2.setText("Restricciones");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +77,7 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jButton3.setText("Aceptar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,11 +85,16 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+
+        jTextField2.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
+
+        jTextField3.setFont(new java.awt.Font("Century Gothic", 2, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,14 +105,10 @@ public class Registro extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 103, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -109,7 +119,10 @@ public class Registro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jTextField2)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -130,7 +143,7 @@ public class Registro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -167,28 +180,38 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String username=jTextField1.getText();
-        if(username!=""&& username.length()>6 && username.length()<13){
-            if(jTextField2.getText().equals(jTextField3.getText())){
-                try {
-                    User login= new User(jTextField1.getText(),jTextField2.getText());   
-                    Files iniciarSesion=new Files();
-                    //iniciarSesion.createUsersFile();
-                    iniciarSesion.saveUserCredential(login);
-                    JOptionPane.showMessageDialog(null, "Usuario registrado" );
-                } catch (Exception ex) {
-                    Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
-                                   JOptionPane.showMessageDialog(null, ""
-                                           + "Error al guardar usuario");
+        String username=jTextField1.getText().toLowerCase();
+        String password=jTextField2.getText();
+        Pattern pattern = Pattern.compile(".*[`~!@#$%^&*()\\\\-_=+\\\\\\\\|\\\\[{\\\\]};:'\\\",<.>/?].*");
+        Matcher match_username = pattern.matcher(password);
+        if(username!="" && username.length()>6 && username.length()<13){ 
+            if(password.equals(jTextField3.getText())){
+                if(match_username.matches()){
+                    try {
+                        User login= new User(username,password);
+                        //Files iniciarSesion=new Files();
+                        //iniciarSesion.createUsersFile();
+                        //iniciarSesion.saveUserCredential(login);
+                        JOptionPane.showMessageDialog(null, "Usuario registrado" );
+                        Login jframe = new Login();
+                        jframe.setLocationRelativeTo(null);
+                        jframe.setVisible(true);
+                        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        this.setVisible(false);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, ""
+                                + "Error al guardar usuario");
+                    }
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña "
+                            + "debe contener al menos un número, una letra "
+                            + "mayuscula y un caracter especial");
                 }
-                Login jframe = new Login();
-                jframe.setLocationRelativeTo(null);
-                jframe.setVisible(true);
-                jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                this.setVisible(false); 
-            }else{ 
-               JOptionPane.showMessageDialog(null, "Las contraseñas no "
-                       + "coinciden");
+            }else{
+                JOptionPane.showMessageDialog(null, "Las contraseñas no "
+                        + "coinciden");
             }
         }else{
                JOptionPane.showMessageDialog(null, "Por favor revise las "
